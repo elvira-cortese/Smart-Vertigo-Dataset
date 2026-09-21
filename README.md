@@ -1,2 +1,30 @@
 # Smart-Vertigo-Dataset
-Open source dataset for acute vertigo diagnosis in the ED
+
+Open-source video dataset of normal and pathological eye movements and oculomotor findings recorded in an emergency department setting.
+
+## Dataset scope, structure and usage considerations
+
+| Section | Content |
+| --- | --- |
+| **Dataset scope and intended use** | This dataset was designed as a video-based dataset focused on normal and pathological eye movements and oculomotor findings. The unit of analysis is the individual video rather than the participant or clinical case. Medical diagnoses were intentionally excluded from the analytical design and target space *a priori*. |
+| **Unit of observation** | One row represents one individual video file. Multiple videos may originate from the same participant and may represent the same test, finding or source recording. Each video remains a separate observation. |
+| **Video editing and cropping** | Videos were edited and cropped primarily to maintain image stability and, where possible, retain portions in which nystagmus or other relevant oculomotor movements could be observed. Cropping was not intended to preserve the complete examination, diagnostic context or full temporal context. |
+| **Interpretation limitation** | Absence of a feature from a cropped video must not automatically be interpreted as absence from the complete clinical examination. Derived variables describe the individual video record and must not be assumed to represent a complete participant-level clinical assessment or diagnosis. |
+| **Medical diagnosis variables** | Medical diagnoses were intentionally excluded from the analytical design and intended scope. Source diagnosis fields retained in `DATA` are preserved solely for provenance and traceability and are excluded from the `DATA_DICTIONARY` and intended feature/target space. |
+| **Machine-learning scope** | Models developed from this dataset should primarily address video-level eye-movement or oculomotor characteristics, including the detection and classification of diagnostically relevant abnormalities. These outputs may contribute to the development of diagnostic models or clinical decision-support systems. However, the dataset itself should not be treated as a participant-level medical diagnosis dataset, and video-level labels should not be interpreted as medical diagnosis targets. |
+| **Participant-level data structure** | Multiple videos may originate from the same participant and are not statistically independent. Training, validation and test partitions should consider participant identity to prevent data leakage. Closely related alternative video versions should remain in the same partition. |
+| **Original-data preservation** | Source variables are retained with their original names and values except for source corrections explicitly validated by the dataset owner. Derived standardised variables never silently overwrite source values. |
+| **Explicit source corrections applied** | Two explicitly validated source corrections were applied: `p27av pursuit_hor result pursuit → smooth`; `p71av GEN record with missing nyst_dir → horizontal_bilateral`. |
+| **Validated p100av gaze exception** | The apraxic result recorded for the `gaze_down`, `gaze_left` and `gaze_right` videos from participant `p100av` has been explicitly validated. These values are preserved and are not treated as source-data errors solely because they differ from the usual gaze result categories. |
+| **Derived-variable missingness** | `not_applicable` indicates that a derived variable does not conceptually apply. `unknown` indicates that the variable applies but the required information is missing, unavailable or cannot be determined reliably. |
+| **result2 missingness** | When no secondary result is recorded in `result2`, `result2_standardized` is assigned `not_applicable`. Absence of a secondary result is not interpreted as unknown information. |
+| **Conservative standardisation** | Standardisation corrects only unequivocal spelling, abbreviation, formatting or predefined categorical variants and must not introduce a new clinical interpretation. |
+| **Traceability** | Every derived value is traceable to one or more source variables through a documented derivation rule. Filename information may support quality control but does not automatically overwrite structured source variables. |
+| **Secondary-finding preservation** | A normal, negative or otherwise non-abnormal primary result must not automatically suppress a relevant oculomotor finding explicitly recorded in `result2`. |
+| **Alternate-cover preservation** | For `alternate_cover`, secondary findings recorded in `result2` are preserved as complete labels and are not decomposed into `abnormality` or `abnormality_direction`. No additional clinical interpretation is derived from these labels. |
+| **GEN direction-preservation rule** | When `nyst_type = gen`, the directional information recorded in `nyst_dir` is preserved in `nystagmus_direction` without clinical reinterpretation or simplification. |
+| **Validated CPN exception** | When `nyst_type = cpn` and `nyst_dir = right_hor_right_beat`, the standardised value remains `right_hor_right_beat`. |
+| **Video-version suffix rule** | Validated numerical suffixes such as `_2` and `_3` may identify alternative versions of a video. These suffixes do not represent characteristics of the nystagmus and are excluded from `nystagmus_direction` while the source `nyst_dir` remains available. |
+| **Lighting conditions** | `good`, `regular` and `bad` describe lighting conditions affecting the visual quality of the video. Recordings classified as `regular` or `bad` were affected by insufficient lighting and/or shadowing. |
+| **Quality-control variables** | `review_required` and `REVIEW_FLAGS` are provided for data-quality assessment and manual review. They are not clinical labels and should not be used as predictive features or outcome variables without specific methodological justification. |
+| **Identifiers** | `internal`, `participant_number` and `filename` are identifiers or traceability variables and should generally not be used as predictive clinical features. |
