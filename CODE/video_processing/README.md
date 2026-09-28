@@ -2,11 +2,14 @@
 
 This directory contains the scripts used for video processing in the Smart Vertigo Dataset.
 
-## Spatial cropping: 320 × 320
+## Spatial cropping: 320 × 320 and 960 × 320
 
-The script `spatial_crop_320x320.py` was used to extract a 320 × 320 pixel region of interest (ROI) from the source videos.
+The script `spatial_crop_320x320.py` was used to extract rectangular regions of interest (ROIs) from the source videos and generate the 320 × 320 and 960 × 320 pixel outputs.
+
+The same spatial-cropping procedure was used for both output sizes. The output dimensions were controlled by the `w` and `h` parameters, while the `x` and `y` coordinates were adjusted manually for each video according to the position of the region of interest.
 
 The script performs spatial cropping only and does not resize the selected region.
+
 
 ### Software and dependencies
 
@@ -23,7 +26,7 @@ The Python standard libraries `os` and `subprocess` are used for file handling a
 
 **Input:** MP4 video file.
 
-**Output:** MP4 video containing a 320 × 320 pixel crop of the selected region of interest.
+**Output:** MP4 video containing either a 320 × 320 or 960 × 320 pixel crop of the selected region of interest.
 
 The script preserves the frame rate reported by the source video. No spatial resizing is applied.
 
@@ -55,7 +58,14 @@ w = 320
 h = 320
 ```
 
-The `x` and `y` values were adjusted manually for individual videos to position the 320 × 320 ROI over the eye.
+For the 960 × 320 outputs:
+
+```python
+w = 960
+h = 320
+```
+
+The `x` and `y` values were adjusted manually for individual videos to position the ROI over the eye.
 
 ### Frame rate, orientation and encoding
 
@@ -81,6 +91,6 @@ The cropped video is initially written as a temporary AVI file using the XVID co
 
 Before processing each video, the participant, video name, and crop location were specified manually in the script.
 
-The output size was fixed at 320 × 320 pixels. The `x` and `y` coordinates were changed for each video to position the crop around the eye.
+The output dimensions were set to either 320 × 320 or 960 × 320 pixels by modifying the `w` and `h` parameters. The `x` and `y` coordinates were adjusted manually for each video to position the crop around the eye.
 
 Therefore, the crop coordinates shown in `spatial_crop_320x320.py` are an example from one video and were not used for all videos.
