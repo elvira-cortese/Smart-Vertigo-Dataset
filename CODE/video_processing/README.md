@@ -94,3 +94,31 @@ Before processing each video, the participant, video name, and crop location wer
 The output dimensions were set to either 320 × 320 or 960 × 320 pixels by modifying the `w` and `h` parameters. The `x` and `y` coordinates were adjusted manually for each video to position the crop around the eye.
 
 Therefore, the crop coordinates shown in `spatial_crop_320x320.py` are an example from one video and were not used for all videos.
+
+## Video frame extraction
+
+The script `extract_video_frames.py` was used to extract individual frames from processed video files.
+
+### Input and output
+
+**Input:** MP4 video file.
+
+**Output:** Individual video frames saved sequentially as PNG images.
+
+Frames are numbered using five-digit sequential filenames, starting from `00000.png` (e.g., `00000.png`, `00001.png`, `00002.png`).
+
+### Software and dependencies
+
+The script was run using:
+
+- Python 3.13.3
+- OpenCV (`opencv-python`) 4.11.0.86
+- Pillow 11.2.1
+
+The Python standard library `os` is used for directory and file handling.
+
+### Frame extraction
+
+The video is read sequentially using OpenCV. Each frame is converted from OpenCV's BGR colour representation to RGB and saved as a PNG image using Pillow.
+
+The script extracts the available frames sequentially without intentionally changing their spatial dimensions.
