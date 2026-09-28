@@ -119,6 +119,11 @@ The Python standard library `os` is used for directory and file handling.
 
 ### Frame extraction
 
-The video is read sequentially using OpenCV. Each frame is converted from OpenCV's BGR colour representation to RGB and saved as a PNG image using Pillow.
+The video is read sequentially using OpenCV. Each frame is converted from OpenCV's BGR colour representation to RGB and saved as a PNG image using 
+Pillow.
+
+## Metadata, summary counts and quality control
+
+No custom code was used to generate the metadata tables, summary counts, or quality-control results.
 
 The script extracts the available frames sequentially without intentionally changing their spatial dimensions.
