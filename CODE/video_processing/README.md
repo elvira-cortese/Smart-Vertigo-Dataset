@@ -10,12 +10,14 @@ The script performs spatial cropping only and does not resize the selected regio
 
 ### Software and dependencies
 
-The script is written in Python and uses:
+The script was run using:
 
-* OpenCV (`cv2`) for video reading, cropping, and video writing
-* NumPy (`numpy`) for optional video rotation
-* FFmpeg for conversion of the temporary AVI file to MP4
-* Python standard libraries `os` and `subprocess` for file handling and execution of FFmpeg
+- Python 3.13.3
+- OpenCV (`opencv-python`) 4.11.0.86
+- NumPy 2.2.5
+- FFmpeg 7.1.1
+
+The Python standard libraries `os` and `subprocess` are used for file handling and execution of FFmpeg.
 
 ### Input and output
 
