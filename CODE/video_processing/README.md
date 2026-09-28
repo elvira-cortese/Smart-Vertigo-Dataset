@@ -12,12 +12,12 @@ The script performs spatial cropping only and does not resize the selected regio
 
 The script is written in Python and uses:
 
-- OpenCV (`cv2`) for video reading, cropping, and video writing
-- NumPy (`numpy`) for optional video rotation
-- FFmpeg for conversion of the temporary AVI file to MP4
-- Python standard libraries `os` and `subprocess` for file handling and execution of FFmpeg
+* OpenCV (`cv2`) for video reading, cropping, and video writing
+* NumPy (`numpy`) for optional video rotation
+* FFmpeg for conversion of the temporary AVI file to MP4
+* Python standard libraries `os` and `subprocess` for file handling and execution of FFmpeg
 
-- ### Input and output
+### Input and output
 
 **Input:** MP4 video file.
 
@@ -35,6 +35,25 @@ The crop is defined as:
 
 ```python
 cropped = frame[y:y+h, x:x+w]
+```
+
+where:
+
+* `x` = horizontal coordinate of the left edge of the crop
+* `y` = vertical coordinate of the upper edge of the crop
+* `w` = width of the crop in pixels
+* `h` = height of the crop in pixels
+
+The coordinate origin `(0, 0)` is the upper-left corner of the source frame. The `x` coordinate increases from left to right and the `y` coordinate increases from top to bottom.
+
+For the 320 × 320 outputs:
+
+```python
+w = 320
+h = 320
+```
+
+The `x` and `y` values were adjusted manually for individual videos to position the 320 × 320 ROI over the eye.
 
 ### Frame rate, orientation and encoding
 
@@ -42,19 +61,19 @@ The source video frame rate is obtained using:
 
 ```python
 fps = cap.get(cv2.CAP_PROP_FPS)
+```
 
-### Parameters specified before processing
+This frame rate is passed to the output video writer; the script does not intentionally resample the frame rate.
 
-Before processing each video, the following values were specified manually in the script:
+By default, the cropped frames are not rotated. The script includes an optional 180° rotation:
 
 ```python
-patient = 'p42av'
-video_name = 'gaze_down'
-subtest_process = True
+# cropped = np.rot90(np.rot90(cropped))
+```
 
-x, y = 620, 700
-w, h = 320, 320
+This operation is disabled unless explicitly uncommented.
 
+The cropped video is initially written as a temporary AVI file using the XVID codec. FFmpeg is then used to convert the temporary file to MP4, after which the temporary AVI file is deleted.
 
 ### Parameters specified before processing
 
