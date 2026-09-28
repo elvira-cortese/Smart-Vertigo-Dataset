@@ -1,6 +1,6 @@
 # Video processing
 
-This directory contains the scripts used for video processing in the Smart Vertigo Dataset.
+This directory contains the scripts used for video processing and video-level quality control in the Smart Vertigo Dataset.
 
 ## Spatial cropping: 320 × 320 and 960 × 320
 
@@ -9,7 +9,6 @@ The script `spatial_crop_320x320.py` was used to extract rectangular regions of 
 The same spatial-cropping procedure was used for both output sizes. The output dimensions were controlled by the `w` and `h` parameters, while the `x` and `y` coordinates were adjusted manually for each video according to the position of the region of interest.
 
 The script performs spatial cropping only and does not resize the selected region.
-
 
 ### Software and dependencies
 
@@ -44,10 +43,10 @@ cropped = frame[y:y+h, x:x+w]
 
 where:
 
-* `x` = horizontal coordinate of the left edge of the crop
-* `y` = vertical coordinate of the upper edge of the crop
-* `w` = width of the crop in pixels
-* `h` = height of the crop in pixels
+- `x` = horizontal coordinate of the left edge of the crop
+- `y` = vertical coordinate of the upper edge of the crop
+- `w` = width of the crop in pixels
+- `h` = height of the crop in pixels
 
 The coordinate origin `(0, 0)` is the upper-left corner of the source frame. The `x` coordinate increases from left to right and the `y` coordinate increases from top to bottom.
 
@@ -119,11 +118,60 @@ The Python standard library `os` is used for directory and file handling.
 
 ### Frame extraction
 
-The video is read sequentially using OpenCV. Each frame is converted from OpenCV's BGR colour representation to RGB and saved as a PNG image using 
-Pillow.
-
-## Metadata, summary counts and quality control
-
-No custom code was used to generate the metadata tables, summary counts, or quality-control results.
+The video is read sequentially using OpenCV. Each frame is converted from OpenCV's BGR colour representation to RGB and saved as a PNG image using Pillow.
 
 The script extracts the available frames sequentially without intentionally changing their spatial dimensions.
+
+## Audio removal and quality-control audit
+
+The script `audit_and_remove_video_audio.py` was used to audit processed video files for the presence of audio streams and, where required, to create audio-free versions of the videos.
+
+### Software and dependencies
+
+The script requires:
+
+- Python 3
+- FFmpeg, including `ffprobe`
+
+The Python standard libraries `pathlib`, `datetime`, `subprocess`, `csv`, `os`, `shutil`, and `sys` are used for file handling, command execution, reporting, and quality-control operations.
+
+### Audio detection and removal
+
+The script recursively searches the specified input directory for supported video files (`.mp4`, `.mov`, `.m4v`, `.mkv`, and `.avi`) and uses `ffprobe` to determine whether one or more audio streams are present.
+
+When audio removal is enabled, FFmpeg removes the audio stream without re-encoding the video stream (`-c copy`). This preserves the encoded video stream while generating an audio-free version of the file.
+
+The script can also be run in audit-only mode, in which files are inspected for audio without being modified. In the repository version, audit-only mode is enabled by default and original files are not overwritten.
+
+### Quality-control verification
+
+When audio removal is performed, the processed file is subsequently checked to verify:
+
+- that no audio stream remains;
+- that the number of video streams is unchanged;
+- that video duration remains within a predefined tolerance of the source file; and
+- when enabled, that the encoded video stream is unchanged by comparing MD5 fingerprints of the video stream before and after audio removal.
+
+Files that do not pass these checks are flagged as quality-control failures rather than being accepted as successfully processed.
+
+### Quality-control reports
+
+The script generates timestamped CSV reports documenting the audit and processing results.
+
+The complete QC report records:
+
+- video filename;
+- number of audio streams before processing;
+- action performed;
+- number of audio streams after processing;
+- video-stream integrity check;
+- QC result; and
+- details of any detected problems.
+
+A second CSV report identifies files in which audio was detected.
+
+Input, output, and report directories are configured locally by the user and are not hard-coded to dataset-specific paths in the repository version of the script.
+
+## Metadata and summary counts
+
+No custom code in this directory was used to generate the dataset metadata tables or descriptive summary counts reported in the manuscript. These procedures are separate from the video-processing and audio quality-control workflow described above.
