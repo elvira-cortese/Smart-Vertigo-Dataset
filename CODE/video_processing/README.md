@@ -175,3 +175,8 @@ Input, output, and report directories are configured locally by the user and are
 ## Metadata and summary counts
 
 No custom code in this directory was used to generate the dataset metadata tables or descriptive summary counts reported in the manuscript. These procedures are separate from the video-processing and audio quality-control workflow described above.
+
+## Authors and development
+
+The video-processing scripts were developed by Elvira Cortese and Benjamin Duvieusart.
+Generative AI tools were used to assist with the development and refinement of some of the scripts included in this repository. All AI-generated or AI-suggested code was reviewed, adapted, and validated by the human authors.
