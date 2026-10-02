@@ -4,7 +4,7 @@ Video dataset of normal and pathological eye movements and oculomotor findings r
 
 ## Repository structure and availability
 
-The SMART-VERTIGO Dataset resources are distributed across Zenodo and GitHub. The dataset and associated documentation are deposited in Zenodo under restricted access, while the supporting video-processing code and its documentation are openly available through GitHub.
+The SMART-VERTIGO Dataset resources are distributed across Zenodo and GitHub. The dataset and associated documentation are deposited in Zenodo under restricted access, while the supporting video-processing scripts and their documentation are openly available through GitHub.
 
 The structure below provides a unified overview of the resources available across both repositories. `ZENODO` and `GITHUB` indicate the repository in which each resource is hosted and are not themselves directories within the deposited resources.
 
@@ -41,7 +41,13 @@ https://doi.org/10.5281/zenodo.23104943
 **GitHub repository:**  
 https://github.com/elvira-cortese/Smart-Vertigo-Dataset
 
-**Video-processing code:**  
+**Archived video-processing scripts (Zenodo; all versions):**  
+https://doi.org/10.5281/zenodo.23016970
+
+**Archived video-processing scripts (Zenodo; v1.0.2):**  
+https://doi.org/10.5281/zenodo.23106946
+
+**Video-processing scripts (GitHub):**  
 https://github.com/elvira-cortese/Smart-Vertigo-Dataset/tree/main/CODE/video_processing
 
 ## Zenodo resources
