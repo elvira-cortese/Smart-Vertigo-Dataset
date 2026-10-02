@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use these scripts, please cite them using the metadata below."
+
+title: "SMART-VERTIGO Dataset: Video Processing Scripts"
+
+authors:
+  - family-names: "Cortese"
+    given-names: "Elvira"
+    orcid: "https://orcid.org/0000-0002-6547-2194"
+
+  - family-names: "Duvieusart"
+    given-names: "Benjamin"
+    orcid: "https://orcid.org/0000-0002-2534-9343"
+
+version: "1.0.2"
+
+repository-code: "https://github.com/elvira-cortese/Smart-Vertigo-Dataset"
